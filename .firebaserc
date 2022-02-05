@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "image-editor-b0233"
+  },
+  "targets": {
+    "image-editor-b0233": {
+      "hosting": {
+        "mfe": [
+          "image-editor-mfe"
+        ]
+      }
+    }
+  }
+}
