@@ -5,7 +5,7 @@
     "start-local": "ng serve -o",
     "build": "ng build --single-bundle",
     "test": "ng test",
-    "build:externals": "ng build --extra-webpack-config /webpack.externals.js --single-bundle"
+    "build:externals": "ng build --extra-webpack-config ./webpack.externals.js --prod --single-bundle"
   },
   "private": true,
   "dependencies": {
