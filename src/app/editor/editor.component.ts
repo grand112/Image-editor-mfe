@@ -15,18 +15,26 @@ export class EditorComponent implements AfterViewInit {
 
   @Input() defaultFile: File;
 
-  @Output() fileSaved = new EventEmitter<File>();
+  @Output() fileSaved = new EventEmitter<string>();
   @Output() infoMessage = new EventEmitter<string>();
 
   constructor(private fileSaver: FileSaverService) { }
 
+  @Input() set openFile(file: File) {
+    if (file) {
+      this.uploadFile(file);
+    }
+  }
+
   ngAfterViewInit(): void {
-    this.addClassesToEditorElements();
-    this.appendSaveButton();
-    this.appendNewImageButton();
-    this.replaceDownloadButton();
-    this.appendDownloadButton();
-    this.imageEditorComponent.loadImage = this.uploadFile.bind(this);
+    setTimeout(() => {
+      this.addClassesToEditorElements();
+      this.appendSaveButton();
+      this.appendNewImageButton();
+      this.replaceDownloadButton();
+      this.appendDownloadButton();
+      this.imageEditorComponent.loadImage = this.uploadFile.bind(this);
+    });
   }
 
   private appendDownloadButton(): void {
@@ -81,12 +89,15 @@ export class EditorComponent implements AfterViewInit {
   }
 
   private saveFile(): void {
-    const dataURL = this.imageEditorComponent.imageEditor.toDataURL();
-    const blob = this.dataUrlToBlob(dataURL);
-    const file = new File([blob], 'fileName');
-    const infoMessage = 'Obraz został pomyślnie zapisany w twojej galerii';
+    let infoMessage: string;
+    if (this.imageEditorComponent.initializeImgUrl) {
+      const dataURL = this.imageEditorComponent.imageEditor.toDataURL();
+      infoMessage = 'Obraz został pomyślnie zapisany w twojej galerii';
+      this.fileSaved.emit(dataURL);
+    } else {
+      infoMessage = 'Błąd: Przed zapisaniem dodaj obraz';
+    }
     this.infoMessage.emit(infoMessage);
-    this.fileSaved.emit(file);
   }
 
   private isFileApiSupported(): boolean {
