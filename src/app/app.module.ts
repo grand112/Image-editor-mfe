@@ -1,4 +1,3 @@
-import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA, Injector, NgModule } from '@angular/core';
 import { createCustomElement } from '@angular/elements';
 import { BrowserModule } from '@angular/platform-browser';
@@ -17,7 +16,6 @@ import { WrapperComponent } from './wrapper/wrapper.component';
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,
     FileSaverModule,
     TuiImageEditorModule,
   ],
